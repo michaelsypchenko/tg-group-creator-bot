@@ -22,8 +22,11 @@ let stringSession = new StringSession(code); // fill this later with the value f
     stringSession = client.session.save();
     console.log(client.session.save()); // Save this string to avoid logging in again
     await client.sendMessage("me", { message: "Hello!" });
+    // const result = await client.invoke(
+    //     new Api.channels.CreateChannel({title: 'string-test-12df12s1-ku', about: 'string-test-12df12s1-ku'})
+    // );
     const result = await client.invoke(
-        new Api.channels.CreateChannel({title: 'string-test-12df12s1-kut', about: 'string-test-12df12s1-kut'})
+        new Api.channels.LeaveChannel({channel: '1614399337n'})//{channel: 'string-test-12df12s1-kut' }
     );
-    console.log("Result is ", result);
+    console.log("Result is id", result['chats'][0].id.value);//1614399337n
 })();
