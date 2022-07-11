@@ -1,4 +1,4 @@
-const { TelegramClient } = require('telegram');
+const { TelegramClient, Api } = require('telegram');
 const { StringSession } = require('telegram/sessions');
 const input = require('input');
 
@@ -10,7 +10,7 @@ let stringSession = new StringSession(code); // fill this later with the value f
 (async () => {
     console.log("Loading interactive example...");
     const client = new TelegramClient(stringSession, apiId, apiHash, {
-        connectionRetries: 5,
+        connectionRetries: 5
     });
     await client.start({
         phoneNumber: async () => await input.text("Please enter your number: "),
@@ -22,4 +22,8 @@ let stringSession = new StringSession(code); // fill this later with the value f
     stringSession = client.session.save();
     console.log(client.session.save()); // Save this string to avoid logging in again
     await client.sendMessage("me", { message: "Hello!" });
+    const result = await client.invoke(
+        new Api.channels.CreateChannel({title: 'string-test-12df12s1-kut', about: 'string-test-12df12s1-kut'})
+    );
+    console.log("Result is ", result);
 })();
