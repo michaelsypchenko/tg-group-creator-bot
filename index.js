@@ -20,13 +20,16 @@ let stringSession = new StringSession(code); // fill this later with the value f
     });
     console.log("You should now be connected.");
     stringSession = client.session.save();
-    console.log(client.session.save()); // Save this string to avoid logging in again
-    await client.sendMessage("me", { message: "Hello!" });
-    // const result = await client.invoke(
-    //     new Api.channels.CreateChannel({title: 'string-test-12df12s1-ku', about: 'string-test-12df12s1-ku'})
-    // );
-    const result = await client.invoke(
-        new Api.channels.LeaveChannel({channel: '1614399337n'})//{channel: 'string-test-12df12s1-kut' }
-    );
-    console.log("Result is id", result['chats'][0].id.value);//1614399337n
+    let result;
+    result = await client.invoke(new Api.channels.CreateChannel({
+        title: 'user-and-admin-1fff', about: 'user-and-admin-11ff',
+        broadcast: true, megagroup: true, forImport: true
+    }));
+    result = await client.invoke(new Api.channels.InviteToChannel({
+        channel: '-100' + JSON.parse(JSON.stringify(result)).chats[0].id,
+        users: [ 2093357100 ]
+    }));
+    result = await client.invoke(new Api.channels.LeaveChannel({
+        channel: '-100' + JSON.parse(JSON.stringify(result)).chats[0].id
+    }));
 })();
