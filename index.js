@@ -1,6 +1,7 @@
 const { TelegramClient, Api } = require('telegram');
 const { StringSession } = require('telegram/sessions');
 const input = require('input');
+require('dotenv').config();
 
 //@todo get vars from dot-env
 const apiId = 12421099;
@@ -24,7 +25,7 @@ let stringSession = new StringSession(code); // fill this later with the value f
     stringSession = client.session.save();
     let result;
     result = await client.invoke(new Api.channels.CreateChannel({
-        title: 'user-and-admin-1fff', about: 'user-and-admin-11ff',
+        title: 'user-and-admin-1ffa', about: 'user-and-admin-1ffa',
         broadcast: true, megagroup: true, forImport: true
     }));
     result = await client.invoke(new Api.channels.InviteToChannel({
