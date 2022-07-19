@@ -3,16 +3,13 @@ const { StringSession } = require('telegram/sessions');
 const input = require('input');
 require('dotenv').config();
 
-//@todo get vars from dot-env
-const apiId = 12421099;
-const apiHash = '1c8728ba487130e56e65ed1dfe03b21c';
-//@todo get vars from dot-env
-const code = `1AgAOMTQ5LjE1NC4xNjcuNDEBu4d34t58mUAygUQ8bWhNPcpvUu1mwqUlHaxdkuIJxLseokXYeTsNib/Oa9JX8SPYL4rDbB2rcibD7fUUWBtxqpHmUjc85Cxzl0Uo6BI4AHM0fONdMPjmP3YzPCWP8xqVhDwW68WkMdUJ4k1V95c03FDv9JkNEd0+pwhCd1goxdGGsIz7cD59UnGFSobeK4K6FUvfelYVX1ilhhU2tOYpCshQrohSqkvuffzU/ZJtDBeOCr0mumw33hAnEzLqAdlcDtImSAf/HKPcKP2tQUlWB6XY9wAeDOVPJOdSY+I261cSW6268N43UlRW+/cDxvFne4147hfbGaexmILaELKD/7Q=`;
-let stringSession = new StringSession(code); // fill this later with the value from session.save()
+const { API_ID, API_HASH, API_CODE } = process.env;
+
+let stringSession = new StringSession(API_CODE); // fill this later with the value from session.save()
 
 (async () => {
     console.log("Loading interactive example...");
-    const client = new TelegramClient(stringSession, apiId, apiHash, {
+    const client = new TelegramClient(stringSession, Number(API_ID), API_HASH, {
         connectionRetries: 5
     });
     await client.start({
