@@ -23,11 +23,7 @@ let stringSession = new StringSession(API_CODE); // fill this later with the val
 	await client.getMe();
 	async function handler(event) {
 		const groupCreateNotification = JSON.parse(event.message.message);
-		if (
-			!groupCreateNotification
-			|| !1902096168
-			|| !groupCreateNotification.affiliate_tg_id
-		) {
+		if ( !groupCreateNotification || !groupCreateNotification.manager_tg_id ) {
 			return;
 		}
 		const result = await client.invoke(new Api.channels.CreateChannel({
@@ -35,13 +31,25 @@ let stringSession = new StringSession(API_CODE); // fill this later with the val
 			broadcast: true, megagroup: true, forImport: true
 		}));
 		const createdChanelId = '-100' + JSON.parse(JSON.stringify(result)).chats[0].id;
-		await client.invoke(new Api.channels.InviteToChannel({
-			channel: createdChanelId,
-			users: [
-				Number(1902096168), Number(groupCreateNotification.affiliate_tg_id)
-			]
-		}));
-	   await client.invoke(new Api.channels.LeaveChannel({ channel: createdChanelId }));
+
+		try {
+			if (!!groupCreateNotification.affiliate_tg_id) {
+				throw new Error('no affiliate_tg_id found');
+			}
+			await client.invoke(new Api.channels.InviteToChannel({
+				channel: createdChanelId,
+				users: [
+					Number(groupCreateNotification.manager_tg_id),
+					Number(groupCreateNotification.affiliate_tg_id)
+				]
+			}));
+
+		} catch (e) {
+			await client.sendMessage(
+				Number(groupCreateNotification.manager_tg_id), { message: groupCreateNotification }
+			);
+		}
+		await client.invoke(new Api.channels.LeaveChannel({ channel: createdChanelId }));
 	}
 	client.addEventHandler(handler, new NewMessage({}));//TelegramClient.events.message
 })();
