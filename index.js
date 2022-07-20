@@ -25,7 +25,7 @@ let stringSession = new StringSession(API_CODE); // fill this later with the val
 		const groupCreateNotification = JSON.parse(event.message.message);
 		if (
 			!groupCreateNotification
-			|| !groupCreateNotification.manager_tg_id
+			|| !1902096168
 			|| !groupCreateNotification.affiliate_tg_id
 		) {
 			return;
@@ -38,7 +38,7 @@ let stringSession = new StringSession(API_CODE); // fill this later with the val
 		await client.invoke(new Api.channels.InviteToChannel({
 			channel: createdChanelId,
 			users: [
-				Number(groupCreateNotification.manager_tg_id), Number(groupCreateNotification.affiliate_tg_id)
+				Number(1902096168), Number(groupCreateNotification.affiliate_tg_id)
 			]
 		}));
 	   await client.invoke(new Api.channels.LeaveChannel({ channel: createdChanelId }));
